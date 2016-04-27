@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang='en'>
+<html>
 <head>
     <meta charset='utf-8'>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
@@ -13,6 +13,8 @@
         height: 100%;
     }
     html, body {
+        font-family: 'Avenir Next', Avenir, -apple-system, Helvetica, Arial, 'PingFang SC', 'Noto Sans CJK SC', 'Noto Sans CJK', 'Source Han Sans CN', 'Source Han Sans', 'Lantinghei SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Heiti SC', sans-serif;
+        font-size: 14px;
         padding: 0;
         margin: 0;
         text-rendering: optimizeLegibility;
@@ -25,31 +27,80 @@
         position: absolute;
         top: 45%;
         width: 100%;
+        -webkit-transform: translateY(-50%);
+        -moz-transform: translateY(-50%);
+        transform: translateY(-50%);
     }
     #major a {
         color: inherit;
         text-decoration: inherit;
+    }
+    .countdown-container {
+        position: relative;
+        display: block;
+        height: 270px;
+        margin: 0 0 30px;
+    }
+    .countdown {
+        font-weight: 600;
+        position: absolute;
+        display: block;
+        width: 100%;
+    }
+    .countdown[data-countdown-state="0"] {
+        font-size: 230px;
+        top: 0%;
+        transition: none;
+    }
+    .countdown[data-countdown-state="1"] {
+        font-size: 1px;
+        top: 55%;
+        transition: all 900ms ease-out;
+    }
+    .link-hsk {
+        font-size: 14px;
     }
     </style>
 </head>
 <body>
     <div id="major">
         <div>
-            <a href="http://www.jisuanke.com/">&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;将在 <span id="countdown" class="countdown" data-countdown="5">5</span> 秒后进入蛤蒜客&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;</a>
+            <div class="countdown-container">
+                <span id="countdown" class="countdown" data-countdown="5" data-countdown-state="0">5</span>
+            </div>
+            <div>
+                <a class="link-hsk" href="http://www.jisuanke.com/">秒后进入蛤蒜客</a>
+            </div>
         </div>
     </div>
     <script>
-    document.getElementById('countdown').innerHTML = document.getElementById('countdown').getAttribute('data-countdown');
-    var intv = window.setInterval(function () {
-        document.getElementById('countdown').setAttribute('data-countdown', document.getElementById('countdown').getAttribute('data-countdown') - 1);
-        document.getElementById('countdown').innerHTML = document.getElementById('countdown').getAttribute('data-countdown');
-        if (document.getElementById('countdown').getAttribute('data-countdown') == 0) {
+    var CD = document.getElementById('countdown');
+
+    window.setState = function (s) {
+        CD.setAttribute('data-countdown-state', s);
+    };
+    window.getCD = function () {
+        return Number(CD.getAttribute('data-countdown'));
+    };
+
+    for (var i = getCD('data-countdown'); i > 0; i--) {
+        window.setTimeout(function () {
+            setState('0');
             window.setTimeout(function () {
-                window.clearInterval(intv);
-                location.replace('http://www.jisuanke.com/');
-            }, 1000);
-        };
-    }, 1000);
+                setState('1');
+            }, 10);
+            if (getCD() != 1) {
+                window.setTimeout(function () {
+                    CD.setAttribute('data-countdown', CD.getAttribute('data-countdown') - 1);
+                    CD.innerHTML = CD.getAttribute('data-countdown');
+                }, 960);
+            } else {
+                window.setTimeout(function () {
+                    location.assign('http://www.jisuanke.com/');
+                }, 960);
+            };
+        }, i*1000-666);
+    };
     </script>
 </body>
 </html>
