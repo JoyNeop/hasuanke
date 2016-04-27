@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <title>蛤蒜客</title>
+    <style>
+    * {
+        box-sizing: border-box;
+    }
+    html {
+        width: 100%;
+        height: 100%;
+    }
+    html, body {
+        padding: 0;
+        margin: 0;
+        text-rendering: optimizeLegibility;
+
+    }
+    #major {
+        font-size: 20px;
+        color: #41B146;
+        text-align: center;
+        position: absolute;
+        top: 45%;
+        width: 100%;
+    }
+    #major a {
+        color: inherit;
+        text-decoration: inherit;
+    }
+    </style>
+</head>
+<body>
+    <div id="major">
+        <div>
+            <a href="http://www.jisuanke.com/">&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;将在 <span id="countdown" class="countdown" data-countdown="5">5</span> 秒后进入蛤蒜客&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;</a>
+        </div>
+    </div>
+    <script>
+    document.getElementById('countdown').innerHTML = document.getElementById('countdown').getAttribute('data-countdown');
+    var intv = window.setInterval(function () {
+        document.getElementById('countdown').setAttribute('data-countdown', document.getElementById('countdown').getAttribute('data-countdown') - 1);
+        document.getElementById('countdown').innerHTML = document.getElementById('countdown').getAttribute('data-countdown');
+        if (document.getElementById('countdown').getAttribute('data-countdown') == 0) {
+            window.setTimeout(function () {
+                window.clearInterval(intv);
+                location.replace('http://www.jisuanke.com/');
+            }, 1000);
+        };
+    }, 1000);
+    </script>
+</body>
+</html>
